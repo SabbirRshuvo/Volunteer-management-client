@@ -1,47 +1,20 @@
+import axios from "axios";
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const VolunteerNeedsNow = () => {
-  const [posts, setPosts] = useState([]);
-
-  // Dummy fetch or replace with real API call
+  const [volunteers, setVolunteers] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      // Replace this array with real data
-      const data = [
-        {
-          id: 1,
-          title: "Beach Cleanup",
-          category: "Environment",
-          deadline: "2025-04-10",
-          thumbnail: "https://via.placeholder.com/300x200",
-        },
-        {
-          id: 2,
-          title: "Food Drive",
-          category: "Community",
-          deadline: "2025-04-08",
-          thumbnail: "https://via.placeholder.com/300x200",
-        },
-        {
-          id: 3,
-          title: "Animal Shelter Help",
-          category: "Animal Welfare",
-          deadline: "2025-04-07",
-          thumbnail: "https://via.placeholder.com/300x200",
-        },
-        // Add more posts...
-      ];
-
-      // Sort by deadline ascending
-      const sorted = data.sort(
-        (a, b) => new Date(a.deadline) - new Date(b.deadline)
-      );
-
-      // Limit to 6 items
-      setPosts(sorted.slice(0, 6));
-    };
-
-    fetchData();
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/volunteer`)
+      .then((res) => {
+        const sortedData = res.data.sort(
+          (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        );
+        setVolunteers(sortedData.slice(0, 6));
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <section className="py-10 px-4">
@@ -49,8 +22,11 @@ const VolunteerNeedsNow = () => {
         Volunteer Needs Now
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {posts.map((post) => (
-          <div key={post.id} className="card bg-base-100 shadow-md rounded-2xl">
+        {volunteers.map((post) => (
+          <div
+            key={post._id}
+            className="card bg-base-100 shadow-md rounded-2xl"
+          >
             <figure>
               <img
                 src={post.thumbnail}
@@ -61,13 +37,25 @@ const VolunteerNeedsNow = () => {
             <div className="card-body">
               <h3 className="card-title text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-gray-500">Category: {post.category}</p>
-              <p className="text-sm text-gray-500">Deadline: {post.deadline}</p>
+              <p className="text-sm text-gray-500">
+                Deadline: {format(new Date(post.deadline), "P")}
+              </p>
               <div className="card-actions justify-end mt-4">
-                <button className="btn btn-primary btn-sm">View Details</button>
+                <Link
+                  to={`/volunteer-details/${post._id}`}
+                  className="btn btn-primary btn-sm"
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           </div>
         ))}
+      </div>
+      <div className=" text-center mt-6 ">
+        <button className="btn btn-info w-1/2">
+          <Link to="/all_volunteer_need_post">See All</Link>
+        </button>
       </div>
     </section>
   );
