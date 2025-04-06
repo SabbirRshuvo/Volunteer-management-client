@@ -1,67 +1,64 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
-import { Link } from "react-router";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   return (
-    <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
+    <div className="navbar fixed top-0 left-0 right-0 z-50 bg-base-100 px-4 md:px-10 shadow-md hover:shadow-lg transition-shadow duration-300">
+      {/* Left: Logo */}
       <div className="flex-1">
-        <Link to="/" className="flex gap-2 items-center">
-          <img className="w-auto h-7" src="" alt="" />
-          <span className="font-bold">Voluneteer Management</span>
+        <Link to="/" className="text-xl font-bold">
+          Volunteer
         </Link>
       </div>
-      <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/all_volunteer_need_post">All Volunteer Need Posts</Link>
-          </li>
 
-          {!user && (
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          )}
+      {/* Center: Nav Links */}
+      <div className="hidden md:flex flex-none">
+        <ul className="menu menu-horizontal px-1 space-x-2">
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/all_volunteer_need_post">
+              All Volunteer Need Posts
+            </NavLink>
+          </li>
         </ul>
+      </div>
 
-        {user && (
-          <div className="dropdown dropdown-end z-50">
-            <div
+      {/* Right: User Section */}
+      <div className="flex-none">
+        {!user ? (
+          <Link to="/login" className="btn btn-outline btn-primary btn-sm">
+            Login
+          </Link>
+        ) : (
+          <div className="dropdown dropdown-end">
+            <label
               tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom"
+              data-tip={user.displayName}
             >
-              <div title={user?.displayName} className="w-10 rounded-full">
-                <img
-                  referrerPolicy="no-referrer"
-                  alt="User Profile Photo"
-                  src={user?.photoURL}
-                />
+              <div className="w-10 rounded-full">
+                <img src={user.photoURL || "/default-avatar.png"} alt="user" />
               </div>
-            </div>
+            </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-slate-500 text-white rounded-box w-56"
             >
               <li>
-                <Link to="/add_Volunteer_need_post" className="justify-between">
-                  Add Volunteer need a Post
-                </Link>
+                <NavLink to="/add_Volunteer_need_post">
+                  Add Volunteer Need Post
+                </NavLink>
               </li>
               <li>
-                <Link to="/manage_my_posts">Manage My Posts</Link>
+                <NavLink to="/manage_my_posts">Manage My Posts</NavLink>
               </li>
-              <li className="mt-2">
-                <button
-                  onClick={logOut}
-                  className="bg-gray-200 block text-center"
-                >
-                  Logout
-                </button>
+              <li>
+                <button onClick={logOut}>Logout</button>
               </li>
             </ul>
           </div>
