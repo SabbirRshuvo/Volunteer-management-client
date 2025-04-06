@@ -54,11 +54,14 @@ const VolunteerNeedsNow = () => {
           </div>
         ))}
       </div>
-      <div className=" text-center mt-6 ">
-        <button className="btn btn-info w-1/2">
-          <Link to="/all_volunteer_need_post">See All</Link>
-        </button>
-      </div>
+      {(volunteers && (
+        <div className=" text-center mt-6 ">
+          <button className="btn btn-info w-1/2">
+            <Link to="/all_volunteer_need_post">See All</Link>
+          </button>
+        </div>
+      )) ||
+        ""}
     </section>
   );
 };
