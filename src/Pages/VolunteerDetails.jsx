@@ -1,10 +1,10 @@
 import axios from "axios";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-
+import { useNavigate, useParams } from "react-router";
 const VolunteerDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [volunteers, setVolunteers] = useState([]);
   useEffect(() => {
     fetchAllData();
@@ -28,10 +28,12 @@ const VolunteerDetails = () => {
     organizerEmail,
   } = volunteers || {};
 
+  const handleBeVolunteer = () => {
+    navigate(`/volunteer-request/${id}`);
+  };
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
       <div className="card lg:card-side bg-base-100 shadow-xl flex flex-col lg:flex-row rounded-2xl">
-        {/* Thumbnail */}
         <figure className="lg:w-1/2 w-full max-h-[400px] overflow-hidden">
           <img
             src={thumbnail}
@@ -66,15 +68,20 @@ const VolunteerDetails = () => {
 
           <div className="text-sm space-y-1">
             <p>
-              <span className="font-medium">Name:</span> {organizerName}
+              <span className="font-medium">Organizer Name:</span>{" "}
+              {organizerName}
             </p>
             <p>
-              <span className="font-medium">Email:</span> {organizerEmail}
+              <span className="font-medium">Organizer Email:</span>{" "}
+              {organizerEmail}
             </p>
           </div>
 
           <div className="card-actions mt-6">
-            <button className="btn btn-primary w-full lg:w-auto">
+            <button
+              onClick={handleBeVolunteer}
+              className="btn btn-primary w-full lg:w-auto"
+            >
               Be a Volunteer
             </button>
           </div>

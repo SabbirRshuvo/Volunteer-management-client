@@ -27,7 +27,7 @@ const AddVolunteerNeedPost = () => {
       location: data.location,
       volunteersNeeded: parseInt(data.volunteersNeeded),
       deadline,
-      organizerName: user?.name || "Anonymous",
+      organizerName: user?.displayName || "Anonymous",
       organizerEmail: user?.email || "unknown@example.com",
     };
 

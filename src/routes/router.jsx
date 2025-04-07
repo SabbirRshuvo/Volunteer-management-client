@@ -9,6 +9,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import VolunteerDetails from "../Pages/VolunteerDetails";
+import BeVolunteer from "../Pages/BeVolunteer";
 
 const routes = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <VolunteerDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/volunteer-request/:id",
+        element: (
+          <PrivateRoute>
+            <BeVolunteer />
           </PrivateRoute>
         ),
       },
