@@ -64,7 +64,33 @@ const ManageMyPosts = () => {
   };
 
   const handleCancel = (id) => {
-    console.log("canceled");
+    Swal.fire({
+      title: "Cancel Request?",
+      text: "Do you want to cancel this volunteer request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#f59e0b",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(
+            `${import.meta.env.VITE_API_URL}/volunteers/request/${id}`
+          );
+          Swal.fire(
+            "Cancelled!",
+            "Your request has been cancelled.",
+            "success"
+          );
+        } catch (err) {
+          setVolunteerRequests((prevPost) =>
+            prevPost.filter((post) => post._id !== id)
+          );
+          Swal.fire("Error!", "Failed to cancel the request.", "error");
+        }
+      }
+    });
   };
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">

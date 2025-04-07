@@ -5,6 +5,10 @@ import {
   FaInstagram,
   FaEnvelope,
   FaPhone,
+  FaHandshake,
+  FaUsers,
+  FaGlobeAmericas,
+  FaHeart,
 } from "react-icons/fa";
 
 const volunteers = [
@@ -38,27 +42,6 @@ const VolunteerSection = () => {
   return (
     <>
       <section>
-        <div
-          className="bg-cover bg-center bg-slate-200 text-black text-center py-20 px-4"
-          style={{ backgroundImage: "url(/hero.jpg)" }}
-        >
-          <h1 className="text-3xl font-bold mb-4">
-            Are you ready to volunteer?
-          </h1>
-          <p className="mb-6">
-            Start one of our programs today and help people in need
-          </p>
-          <div className="flex justify-center gap-4">
-            <button className="bg-orange-500 hover:bg-orange-600 py-2 px-4 cursor-pointer">
-              Become a Volunteer
-            </button>
-            <button className="bg-red-500 hover:bg-red-600 py-2 px-4 cursor-pointer">
-              Make a Donation
-            </button>
-          </div>
-        </div>
-      </section>
-      <section>
         <div className="py-10 px-4 max-w-6xl mx-auto">
           <h2 className="text-2xl font-semibold mb-6">
             Our group of <span className="font-bold">volunteers</span>
@@ -87,6 +70,65 @@ const VolunteerSection = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 px-4 bg-gradient-to-br from-indigo-50 to-white">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            Our Volunteer Standards
+          </h2>
+          <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
+            We believe in making a meaningful difference with integrity,
+            passion, and unity. These are the core values we expect from all our
+            volunteers.
+          </p>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+              <FaHandshake className="text-4xl text-indigo-500 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                Commitment
+              </h4>
+              <p className="text-sm text-gray-600">
+                Volunteers should be dependable and dedicated to the tasks they
+                undertake.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+              <FaUsers className="text-4xl text-indigo-500 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                Teamwork
+              </h4>
+              <p className="text-sm text-gray-600">
+                Collaboration and mutual respect are at the heart of our
+                mission.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+              <FaGlobeAmericas className="text-4xl text-indigo-500 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                Global Perspective
+              </h4>
+              <p className="text-sm text-gray-600">
+                We value inclusivity, diversity, and understanding across
+                cultures.
+              </p>
+            </div>
+
+            <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-all duration-300">
+              <FaHeart className="text-4xl text-indigo-500 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                Compassion
+              </h4>
+              <p className="text-sm text-gray-600">
+                A kind heart and willingness to help are the pillars of
+                volunteerism.
+              </p>
+            </div>
           </div>
         </div>
       </section>
