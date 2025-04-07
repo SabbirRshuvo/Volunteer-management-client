@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../Provider/AuthProvider";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const ManageMyPosts = () => {
   const { user } = useContext(AuthContext);
@@ -12,9 +15,11 @@ const ManageMyPosts = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`${import.meta.env.VITE_API_URL}/my-volunteer-posts`, {
-          params: { email: user.email },
-        })
+        .get(
+          `${import.meta.env.VITE_API_URL}/my-volunteer-posts?email=${
+            user.email
+          }`
+        )
         .then((res) => setVolunteerPosts(res.data))
         .catch(() => toast.error("Failed to fetch your posts"));
     }
@@ -24,24 +29,42 @@ const ManageMyPosts = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`${import.meta.env.VITE_API_URL}/my-volunteer-requests`, {
-          params: { email: user.email },
-        })
+        .get(
+          `${import.meta.env.VITE_API_URL}/my-volunteer-requests?email=${
+            user.email
+          }`
+        )
         .then((res) => setVolunteerRequests(res.data))
         .catch(() => toast.error("Failed to fetch your requests"));
     }
   }, [user?.email]);
 
   const handleDelete = (id) => {
-    toast.success("Deleted successfully!");
-  };
-
-  const handleUpdate = (id) => {
-    toast("Redirecting to update...");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this post!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`${import.meta.env.VITE_API_URL}/volunteer/${id}`);
+          Swal.fire("Deleted!", "Your post has been deleted.", "success");
+          setVolunteerPosts((prevPosts) =>
+            prevPosts.filter((post) => post._id !== id)
+          );
+        } catch {
+          Swal.fire("Error!", "Failed to delete the post.", "error");
+        }
+      }
+    });
   };
 
   const handleCancel = (id) => {
-    toast.success("Request cancelled!");
+    console.log("canceled");
   };
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
@@ -70,12 +93,12 @@ const ManageMyPosts = () => {
                     <td>{post.category}</td>
                     <td>{post.volunteersNeeded}</td>
                     <td className="flex gap-2">
-                      <button
-                        onClick={() => handleUpdate(post._id)}
+                      <Link
+                        to={`/volunteer_update/${post._id}`}
                         className="btn btn-sm btn-outline btn-info"
                       >
                         Update
-                      </button>
+                      </Link>
                       <button
                         onClick={() => handleDelete(post._id)}
                         className="btn btn-sm btn-outline btn-error"
