@@ -69,7 +69,9 @@ const AllVolunteerNeedPost = () => {
                     {format(new Date(post.deadline), "P")}
                   </span>
                 </p>
-
+                <p className="text-sm text-gray-500 mb-4">
+                  Volunteer Needs: {post.volunteersNeeded}
+                </p>
                 <div className="mt-auto">
                   <Link
                     to={`/volunteer-details/${post._id}`}

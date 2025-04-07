@@ -43,6 +43,11 @@ const VolunteerNeedsNow = () => {
                 </span>
                 <span>{format(new Date(post.deadline), "P")}</span>
               </div>
+              <div className="flex items-center justify-between text-sm text-gray-600">
+                <p className="text-black">
+                  Volunteer Needs: {post.volunteersNeeded}
+                </p>
+              </div>
 
               <Link
                 to={`/volunteer-details/${post._id}`}
