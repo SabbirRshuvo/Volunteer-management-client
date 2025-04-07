@@ -11,6 +11,7 @@ const BeVolunteer = () => {
 
   const [post, setPost] = useState(null);
   const [suggestion, setSuggestion] = useState("");
+  const [alreadyRequested, setAlreadyRequested] = useState(false);
 
   useEffect(() => {
     axios
@@ -19,9 +20,30 @@ const BeVolunteer = () => {
         setPost(res.data);
       })
       .catch((err) => {
-        console.log("error fetching", err);
+        toast.error("Failed to fetch post data.");
+        console.error("error fetching", err);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (user?.email && id) {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/volunteers/requested`, {
+          params: {
+            email: user.email,
+            postId: id,
+          },
+        })
+        .then((res) => {
+          if (res.data?.requested) {
+            setAlreadyRequested(true);
+          }
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    }
+  }, [user?.email, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,15 +66,14 @@ const BeVolunteer = () => {
         `${import.meta.env.VITE_API_URL}/volunteers/request`,
         requestData
       );
-
       await axios.patch(
         `${import.meta.env.VITE_API_URL}/volunteers/decrease/${id}`
       );
-      toast.success("Requested submitted successfully!");
+      toast.success(" Request submitted successfully!");
       setSuggestion("");
     } catch (error) {
       console.error("Error submitting request:", error);
-      alert(" Failed to submit request.");
+      toast.error(" Failed to submit request. Maybe already requested.");
     }
   };
 
@@ -134,8 +155,12 @@ const BeVolunteer = () => {
             readOnly
           />
 
-          <button className="btn btn-primary w-full" type="submit">
-            Request
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={alreadyRequested}
+          >
+            {alreadyRequested ? "Already Requested" : "Submit Request"}
           </button>
         </form>
       )}
