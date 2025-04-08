@@ -1,12 +1,59 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Volunteer Management
 
-Currently, two official plugins are available:
+A full-stack volunteer management application that allows organizers to post volunteer needs and users to request participation in volunteer activities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Site
 
-## Expanding the ESLint configuration
+[Live URL](https://voluneteer-management.web.app)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Purpose
+
+The purpose of this project is to:
+
+- Connect volunteers with organizers
+- Help organizers manage volunteer needs efficiently
+- Track volunteer requests per post
+- Create a meaningful impact through collaboration
+
+## Key Features
+
+- Authentication system
+- Add & Manage Volunteer Need Posts
+- Volunteer Request Functionality
+- Separate management for:
+- My Volunteer Need Posts (with Update & Delete)
+- My Volunteer Request Posts (with Cancel option)
+- Responsive and clean UI using Tailwind CSS & DaisyUI
+- React Date Picker for selecting deadlines
+- Custom 404 Error Page with animation
+- RESTful API (Express + MongoDB)
+- Toast and Alert messages for UX feedback
+
+## NPM Packages Used
+
+| Package                                              | Purpose                                         |
+| ---------------------------------------------------- | ----------------------------------------------- |
+| **@emotion/react**                                   | CSS-in-JS styling (used by some animation libs) |
+| **axios**                                            | For making API requests                         |
+| **date-fns**                                         | Date formatting and manipulation                |
+| **firebase**                                         | Authentication                                  |
+| **framer-motion** / **motion**                       | Smooth page/component animations                |
+| **react** / **react-dom**                            | Core React                                      |
+| **react-awesome-reveal**                             | Entry animations (fade/zoom effects)            |
+| **react-datepicker**                                 | Deadline picking calendar                       |
+| **react-hook-form**                                  | Handling form logic and validation              |
+| **react-hot-toast**                                  | Toast success/error messages                    |
+| **react-icons**                                      | Icons                                           |
+| **react-router-dom**                                 | Routing                                         |
+| **sweetalert2**                                      | Sweet styled confirmation modals                |
+| **tailwindcss**                                      | Utility-first styling                           |
+| **daisyui** (installed through `tailwind.config.js`) | Pre-built UI components                         |
+
+## Tech Stack
+
+- **Frontend:** React, Tailwind CSS, DaisyUI
+- **Backend:** Node.js, Express.js, MongoDB
+- **Auth:** Firebase Authentication
+- **Date:** React DatePicker + date-fns
+- **UI/UX:** Framer Motion, SweetAlert2, Toasts
