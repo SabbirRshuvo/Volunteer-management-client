@@ -26,11 +26,9 @@ const Login = () => {
     }
   };
 
-  // Email Password Signin
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      //User Login
       await signIn(email, password);
       toast.success("Logged in successfully!");
       navigate(from, { replace: true });
@@ -95,7 +93,7 @@ const Login = () => {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="btn w-full mt-2 bg-red-500 hover:bg-red-600 text-white font-bold"
+            className="btn w-full mt-2 bg-red-400 hover:bg-red-500 text-white font-bold"
           >
             <FaGoogle /> Continue with Google
           </button>
