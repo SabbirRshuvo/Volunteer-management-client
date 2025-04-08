@@ -6,6 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import { axiosSecure } from "../hooks/UseAxiosSecure";
 
 const ManageMyPosts = () => {
   const { user } = useContext(AuthContext);
@@ -14,12 +15,8 @@ const ManageMyPosts = () => {
 
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(
-          `${import.meta.env.VITE_API_URL}/my-volunteer-posts?email=${
-            user.email
-          }`
-        )
+      axiosSecure
+        .get(`/my-volunteer-posts?email=${user.email}`)
         .then((res) => setVolunteerPosts(res.data))
         .catch(() => toast.error("Failed to fetch your posts"));
     }
@@ -28,12 +25,8 @@ const ManageMyPosts = () => {
   // Get requests made by user
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(
-          `${import.meta.env.VITE_API_URL}/my-volunteer-requests?email=${
-            user.email
-          }`
-        )
+      axiosSecure
+        .get(`/my-volunteer-requests?email=${user.email}`)
         .then((res) => setVolunteerRequests(res.data))
         .catch(() => toast.error("Failed to fetch your requests"));
     }
@@ -83,10 +76,10 @@ const ManageMyPosts = () => {
             "Your request has been cancelled.",
             "success"
           );
-        } catch (err) {
           setVolunteerRequests((prevPost) =>
             prevPost.filter((post) => post._id !== id)
           );
+        } catch (err) {
           Swal.fire("Error!", "Failed to cancel the request.", "error");
         }
       }
